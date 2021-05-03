@@ -1,10 +1,7 @@
 import React , {useEffect, useState} from "react";
-import {View,Text, TouchableOpacity,FlatList,Modal} from 'react-native';
+import {Text, TouchableOpacity , StyleSheet} from 'react-native';
 import { useObserver } from "mobx-react-lite";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import SelectColors from "./SelectColors";
-import { GeneralStore } from "../stores";
-import CreateThread from "./CreateThread";
 import { useNavigation } from '@react-navigation/native';
 import methods from "../methods/methods";
 
@@ -21,7 +18,7 @@ const ThreadTitle = ({item,index})=> {
       return useObserver(() =>
       <TouchableOpacity 
       onPress={() => navigation.navigate('Thread',{id:item._id,title:item.title})}
-      style={[s.rowSpaceBetween,{borderBottomColor:"black",borderBottomWidth:0.5, padding:15,backgroundColor:item.color}]}>
+      style={[s.rowSpaceBetween,styles.topHeader,{backgroundColor:item.color}]}>
           <Text style={{fontSize:16,color:color}}>{item.title}</Text>
           <Icon name={'keyboard-arrow-right'} size={22} color={color}/>
       </TouchableOpacity>
@@ -32,6 +29,9 @@ const ThreadTitle = ({item,index})=> {
   export default ThreadTitle
 
   
-
-
-  
+  const styles = StyleSheet.create({
+    topHeader: {borderBottomColor:"black",
+    borderBottomWidth:0.5, 
+    padding:15}
+    
+  })

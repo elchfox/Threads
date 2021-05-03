@@ -1,16 +1,11 @@
-import React , {useEffect, useState} from "react";
-import {View,Text, TouchableOpacity,FlatList,ScrollView} from 'react-native';
+import React  from "react";
+import {View, TouchableOpacity, ScrollView} from 'react-native';
 import { useObserver } from "mobx-react-lite";
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 var s = require('../style')
 
-const SelectColors = ({open, COLORS,onPress})=> {
-    const [isOpen, setIsOpen] = useState(false)
-      useEffect(() => {
-        setIsOpen(open)
-       
-      }, [])
+const SelectColors = ({ COLORS,onPress})=> {
+   
       return useObserver(() =>
       
       <ScrollView >

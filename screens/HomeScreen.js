@@ -1,14 +1,12 @@
 import React , {useState,useEffect} from "react";
-import {FlatList, Text, View,TouchableOpacity,ScrollView} from 'react-native';
+import {FlatList, Text, View,TouchableOpacity,ScrollView, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useObserver } from "mobx-react-lite";
-
-
-import ThreadItem from "../components/Thread";
 import { GeneralStore } from "../stores";
 import CreateThread from "../components/CreateThread";
 import ThreadTitle from "../components/ThreadTitle";
+import { SIZES } from "../constants";
 
 var s = require('../style')
 
@@ -37,7 +35,7 @@ var s = require('../style')
                  <Icon name={'add-comment'} size={22} color={"black"}/>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop:55}}>
+        <View style={{marginTop:SIZES.marginTop}}>
        {openCreate && <CreateThread  onPress={(title, color)=> create(title,color)}/> }
           <FlatList data={GeneralStore.threadsList} renderItem={(e)=><ThreadTitle {...e} key={e.index}/>}
                       keyExtractor={(item, index) => index.toString()}/>
@@ -52,3 +50,6 @@ var s = require('../style')
 
 
 
+  const styles = StyleSheet.create({
+   
+  })

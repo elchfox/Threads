@@ -9,6 +9,7 @@ import ThreadItem from "../components/Thread";
 import { GeneralStore } from "../stores";
 import CreateThread from "../components/CreateThread";
 import { toJS } from "mobx";
+import { SIZES } from "../constants";
 
 var s = require('../style')
 
@@ -47,7 +48,7 @@ const  create = async (title,color)=> {
                 <Icon name={'add-comment'} size={24} color={'black'}/>
             </TouchableOpacity>
           </View>
-          <View style={{marginTop:55}}>
+          <View style={{marginTop:SIZES.marginTop}}>
           {openCreate && <CreateThread  onPress={(title, color)=> create(title,color)}/> }
 
           <FlatList data={GeneralStore.threadItem}
@@ -60,7 +61,4 @@ const  create = async (title,color)=> {
   
 
 
-  export default ThreadScreen
-
-
-
+export default ThreadScreen

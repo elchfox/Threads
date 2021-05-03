@@ -14,6 +14,7 @@ const ThreadItem = ({open, item,index})=> {
       const [fontColor, setFontColor] = useState("#000")
       const [openColors, setOpenColors] = useState(false)
       const [openCreate, setOpenCreate] = useState(false)
+      
       useEffect(async () => {
         item.comments = item.comments === undefined ?  [] : item.comments
         setIsOpen(open)
@@ -54,15 +55,16 @@ const ThreadItem = ({open, item,index})=> {
                  </TouchableOpacity>
              </View>
              {openColors && <SelectColors  onPress={(color)=> update(color)}/>}
-         {isOpen && item.comments && item.comments.length > 0 && <FlatList data={item.comments}
-           renderItem={(e)=> <ThreadItem  key={e.index} {...e}/>}
-           keyExtractor={(item, index) => index.toString()}/> }
-
+            {isOpen && item.comments && item.comments.length > 0 && <FlatList data={item.comments}
+              renderItem={(e)=> <ThreadItem  key={e.index} {...e}/>}
+              keyExtractor={(item, index) => index.toString()}/> }
+        
         {isOpen && item.comments && item.comments.length > 0  && 
       
-        <TouchableOpacity  onPress={()=> setOpenCreate(!openCreate)}>
-          <Icon style={{alignSelf:'flex-end',marginBottom:8}} name={'add-comment'} size={22} color={fontColor}/>
-        </TouchableOpacity>}
+            <TouchableOpacity  onPress={()=> setOpenCreate(!openCreate)}>
+              <Icon style={{alignSelf:'flex-end',marginBottom:8}} name={'add-comment'} size={22} color={fontColor}/>
+            </TouchableOpacity>
+        }
         {openCreate && <CreateThread marginBottom={8}  onPress={(title, color)=> create(title,color)}/>}
        </TouchableOpacity>
       );

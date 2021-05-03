@@ -6,6 +6,7 @@ class threadApi {
  //get the restaurants data from server
  async getThreads() {
     const data = await fetch(`${global.baseUrl}/thread`)
+    console.log(data)
 
     const json = await data.json()
     return json

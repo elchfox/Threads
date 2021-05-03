@@ -15,6 +15,7 @@ class GeneralStore {
     }
     async getThreads(){
        let res = await  threadApi.getThreads()
+       console.log(res)
        this.threadsList = res
     }
     async getThread(id){

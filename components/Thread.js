@@ -6,6 +6,7 @@ import SelectColors from "./SelectColors";
 import { GeneralStore } from "../stores";
 import CreateThread from "./CreateThread";
 import methods from "../methods/methods";
+import threadApi from "../modules/threadApi";
 
 var s = require('../style')
 
@@ -16,7 +17,6 @@ const ThreadItem = ({open, item,index})=> {
       const [openCreate, setOpenCreate] = useState(false)
       
       useEffect(async () => {
-        item.comments = item.comments === undefined ?  [] : item.comments
         setIsOpen(open)
 
         setFontColor(await methods.checkColorLightAndDark(item.color))
@@ -34,13 +34,21 @@ const ThreadItem = ({open, item,index})=> {
         setOpenColors(false)
         let data = {title,itemId:item._id,color}
        let res = await GeneralStore.create(data)
-       item.comments = item.comments !== undefined  ? item.comments.push(res) : [res]
+        item.comments.push(res) 
+     }
+
+      const  openComments = async (id)=> {
+         let res = await threadApi.getThread(id)
+        item.comments = res[0].comments
+        setIsOpen(!isOpen)
 
      }
+
+
       return useObserver(() =>
   
       <TouchableOpacity 
-       onPress={()=> setIsOpen(!isOpen)}
+      onPress={()=> openComments(item._id)}
        style={{ paddingHorizontal:8,backgroundColor:item.color,marginBottom:8}}>
             <View style={[s.rowSpaceBetween,s.center]}>
                  <View style={[s.row,s.centerRow,{paddingVertical:8}]}>
@@ -49,17 +57,17 @@ const ThreadItem = ({open, item,index})=> {
                     </TouchableOpacity>
                     <Text style={{fontSize:18,color:fontColor,marginLeft:5,flex:0.9}}>{item.title}</Text>
                  </View>
-                 <TouchableOpacity  onPress={()=> setOpenCreate(!openCreate)} disabled={item.comments}>
-                 <Icon name={item.comments && item.comments.length > 0 ?  !isOpen ? 'keyboard-arrow-down': 'keyboard-arrow-up': 'add-comment'}
+                 <TouchableOpacity  onPress={()=> setOpenCreate(!openCreate)} disabled={ item.comments.length > 0 }>
+                 <Icon name={item.comments.length > 0 ?  !isOpen ? 'keyboard-arrow-down': 'keyboard-arrow-up': 'add-comment'}
                   size={22} color={fontColor}/>
                  </TouchableOpacity>
              </View>
              {openColors && <SelectColors  onPress={(color)=> update(color)}/>}
-            {isOpen && item.comments && item.comments.length > 0 && <FlatList data={item.comments}
+            {isOpen && item.comments.length > 0 && <FlatList data={item.comments}
               renderItem={(e)=> <ThreadItem  key={e.index} {...e}/>}
               keyExtractor={(item, index) => index.toString()}/> }
         
-        {isOpen && item.comments && item.comments.length > 0  && 
+        {isOpen && item.comments.length > 0  && 
       
             <TouchableOpacity  onPress={()=> setOpenCreate(!openCreate)}>
               <Icon style={{alignSelf:'flex-end',marginBottom:8}} name={'add-comment'} size={22} color={fontColor}/>

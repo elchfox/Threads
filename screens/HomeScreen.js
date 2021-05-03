@@ -1,5 +1,5 @@
 import React , {useState,useEffect} from "react";
-import {FlatList, Text, View,TouchableOpacity,ScrollView, StyleSheet} from 'react-native';
+import {FlatList, Text, View,TouchableOpacity,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useObserver } from "mobx-react-lite";
@@ -46,10 +46,4 @@ var s = require('../style')
   
 
 
-  export default HomeScreen
-
-
-
-  const styles = StyleSheet.create({
-   
-  })
+export default HomeScreen
